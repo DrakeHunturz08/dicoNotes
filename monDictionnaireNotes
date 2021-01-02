@@ -1,0 +1,189 @@
+# 1)
+
+# création d'un dictionnaire de notes
+dicoNotes = {'Histoire-Geo':[12.0, 14.0],'NSI':[14.0, 12.0, 12.0, 12.0, 16.0],'Maths':[8.5]}
+
+
+# 2)
+
+# *---------- FONCTIONS ----------*
+
+def AfficherMatiere(dico):
+    return list(dico.keys())
+
+
+def AfficherNote(matiere, dico):
+    if matiere in dico:
+        x = dico.get(matiere)
+    return x
+
+
+def Moyenne(matiere, dico):
+    if matiere in dico:
+        notes = AfficherNote(matiere, dico)
+        moy = sum(notes) / len(notes)
+    return moy
+
+
+def MoyenneGenerale(dico):
+    L = []
+    for key in dico:
+        L.append(sum(dico[key])/len(dico[key]))
+    moy_gen = sum(L) / len(L)
+    return moy_gen
+
+
+def AjouterMatiere(matiere, note, dico):
+    dico[matiere] = notes
+    return dico[matiere]
+
+
+# *---------- MAIN ----------*
+
+# afficher le menu
+while 1 :
+    # try/except si x est un chiffre
+    try: 
+        x = int(input("Taper un chiffre:\n    0. Sortir du menu\n    1. Afficher les notes\n    2. Calculer la moyenne d'une matière\n    3. Afficher la moyenne générale\n    4. Ajouter une note dans une matière\n    5. Effacer une note dans une matière\n    6. Ajouter une matière\n"))
+        
+
+        # cas où 0 est tapé
+        if x == 0:
+            print("\nVous sortez du menu.\n    Au revoir !\n")
+            exit()
+
+
+        # cas où 1 est tapé
+        if x == 1:
+            print()
+            print(AfficherMatiere(dicoNotes))
+            # choix de la matiere
+            matiere = input("    Choisir une matière : ")
+            # gestion d'erreur si la matière n'est pas dans le dictionnaire
+            if matiere not in dicoNotes:
+                print("Erreur : Entrer une matière valide.\n")
+            else:
+                # print les notes de la matière en enlevant la forme d'une liste
+                notes = AfficherNote(matiere, dicoNotes)
+                str_notes = ", ".join(str(n) for n in notes)
+                print(f"  Vous avez eu {str(str_notes)} en {matiere}.\n")
+
+
+        # cas où 2 est tapé
+        if x == 2:
+            print()
+            print(AfficherMatiere(dicoNotes))
+            # choix de la matiere
+            matiere = input("    Choisir une matière : ")
+            # gestion d'erreur si la matière n'est pas dans le dictionnaire
+            if matiere not in dicoNotes:
+                print("Erreur : Entrer une matière valide.\n")
+            else:
+                print(f"  Vous avez une moyenne de {Moyenne(matiere, dicoNotes)} en {matiere}.\n")
+            
+
+        # cas où 3 est tapé
+        if x == 3:
+            print(f"  Votre moyenne générale est de {round(MoyenneGenerale(dicoNotes), 2)}.\n")
+
+        
+        # cas où 4 est tapé
+        if x == 4:
+            print()
+            print(AfficherMatiere(dicoNotes))
+            # choix de la matiere
+            matiere = input("    Choisir une matière : ")
+            # gestion d'erreur si la matière n'est pas dans le dictionnaire
+            if matiere not in dicoNotes:
+                print("Erreur : Entrer une matière valide.\n")
+            else:
+                # gestion d'erreur si le nombre a ajouter n'est pas un nombre
+                try:
+                    # Entrer le nombre de note a ajouter
+                    nombre = int(input("    Entrer le nombre de note a ajouter : "))
+                    for i in range(nombre):
+                        # entrer la note
+                        # gestion d'erreur si la note n'est pas un chiffre
+                        try:
+                            note = float(input(f"    Enter la note {i+1} : "))
+                            # gestion d'erreur si la note n'est pas entre 0 et 20
+                            if note < 0 or note > 20:
+                                print("Erreur : Entrer une note valide.")
+                            # print les notes de la matière en enlevant la forme d'une liste
+                            else:
+                                notes = AfficherNote(matiere, dicoNotes)
+                                nt = notes.append(note)
+                                str_notes = ", ".join(str(n) for n in notes)
+                        except ValueError:
+                            print("Erreur : Entrer une note valide.")
+                    print(f"  Les notes dans la matière {matiere} sont {str_notes}.\n")
+                except ValueError:
+                    print("Entrer un nombre valide.")
+
+
+        # cas où 5 est tapé
+        if x == 5:
+            print()
+            print(AfficherMatiere(dicoNotes))
+            # choix de la matiere
+            matiere = input("    Choisir une matière : ")
+            # gestion d'erreur si la matière n'est pas dans le dictionnaire
+            if matiere not in dicoNotes:
+                print("Erreur : Entrer une matière valide.\n")
+            else:
+                notes = AfficherNote(matiere, dicoNotes)
+                str_notes = ", ".join(str(n) for n in notes)
+                print(f"    Les notes dans la matière {matiere} sont {str_notes}.")
+                # gestion d'erreur si le nombre a ajouter n'est pas un nombre
+                try:
+                    # Entrer le nombre de note a ajouter
+                    nombre = int(input("    Entrer le nombre de note a supprimer : "))
+                    for i in range(nombre):
+                        # entrer la note
+                        # gestion d'erreur si la note n'est pas un chiffre
+                        try:
+                            note = float(input(f"    Enter la note {i+1} : "))
+                            if note not in notes:
+                                print("Erreur : Entrer une note valide.")
+                            else:
+                                L = AfficherNote(matiere, dicoNotes)
+                                L.remove(note)
+                        except ValueError:
+                            print("Erreur : Entrer une note valide.")
+                    # print les notes de la matière en enlevant la forme d'une liste
+                    str_L = ", ".join(str(n) for n in L)
+                    print(f"Les notes de la matière {matiere} sont désormais {str_L}.\n")
+                except ValueError:
+                    print("Entrer un nombre valide.")
+
+        
+        # cas où 6 est tapé
+        if x == 6:
+            notes = []
+            matiere = input("    Entrer la matière a ajouter : ")
+            try:
+                # Entrer le nombre de note a ajouter
+                nombre = int(input("    Entrer le nombre de note a ajouter : "))
+                for i in range(nombre):
+                    # entrer la note
+                    # gestion d'erreur si la note n'est pas un chiffre
+                    try:
+                        note = float(input(f"    Entrer la note {i+1} : "))
+                        if note < 0 or note > 20:
+                            print("Erreur : Entrer une note valide.")
+                        else:
+                            notes.append(note)
+                            AjouterMatiere(matiere, notes, dicoNotes)
+                    except ValueError:
+                        print("Erreur : Entrer une note valide.")
+                # print la matière ajoutée et les notes associées
+                print(f"{matiere} : {AfficherNote(matiere, dicoNotes)}\n")
+            except ValueError:
+                print("Erreur : Entrer un nombre valide.")
+
+
+        # vérifie si x est un chiffre entre 0 et 5
+        if (x < 0) or (x > 6):
+            print("Erreur : Taper un chiffre valide.\n")
+    except ValueError:
+        print("Erreur : Taper un chiffre valide.\n")
